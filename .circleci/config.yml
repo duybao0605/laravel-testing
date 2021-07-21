@@ -59,12 +59,12 @@ jobs:
           key: node-v1-{{ checksum "package.json" }}
           paths:
             - node_modules
-      # ESLint double check
-      - run:
-          name: ESLint
-          command: |
-            mkdir -p ./logs/eslint
-            node_modules/eslint/bin/eslint.js --ext .js,.vue -o logs/eslint/junit.xml -f junit resources/js
+      # # ESLint double check
+      # - run:
+      #     name: ESLint
+      #     command: |
+      #       mkdir -p ./logs/eslint
+      #       node_modules/eslint/bin/eslint.js --ext .js,.vue -o logs/eslint/junit.xml -f junit resources/js
       # Unit Test
       - run:
           name: Run Unit Tests
