@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="" tests="2" assertions="2" errors="0" failures="1" skipped="0" time="0.204815">
-    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.079023">
-      <testsuite name="Tests\Unit\ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Unit/ExampleUnitTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.079023">
-        <testcase name="testBasicTest" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Unit/ExampleUnitTest.php" line="17" assertions="1" time="0.079023"/>
+  <testsuite name="" tests="2" assertions="2" errors="0" failures="1" skipped="0" time="0.278366">
+    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.153481">
+      <testsuite name="Tests\Unit\ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Unit/ExampleUnitTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.153481">
+        <testcase name="testBasicTest" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Unit/ExampleUnitTest.php" line="17" assertions="1" time="0.153481"/>
       </testsuite>
     </testsuite>
-    <testsuite name="Feature" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.125792">
-      <testsuite name="Tests\Feature\ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Feature/ExampleHttpTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.125792">
-        <testcase name="testUserCreationEndpointTest" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Feature/ExampleHttpTest.php" line="13" assertions="1" time="0.125792">
+    <testsuite name="Feature" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.124885">
+      <testsuite name="Tests\Feature\ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Feature/ExampleHttpTest.php" tests="1" assertions="1" errors="0" failures="1" skipped="0" time="0.124885">
+        <testcase name="testUserCreationEndpointTest" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" file="/Users/nguyenduybao/laravel-testing/tests/Feature/ExampleHttpTest.php" line="13" assertions="1" time="0.124885">
           <failure type="PHPUnit\Framework\ExpectationFailedException">Tests\Feature\ExampleTest::testUserCreationEndpointTest
 Expected status code 201 but received 500.
 Failed asserting that false is true.
