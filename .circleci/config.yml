@@ -1,5 +1,5 @@
 # PHP CircleCI 2.0 configuration file
-#
+# ref: https://gist.github.com/thijskok/58cd0139dc812a570812456f4c1f08d0
 # Check https://circleci.com/docs/2.0/language-php/ for more details
 #
 version: 2
@@ -8,53 +8,74 @@ jobs:
     docker:
       # Specify the version you desire here
       - image: circleci/php:7.4-node-browsers
-
+      # Mysql
+      - image: circleci/mysql:8.0
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: mailnhanhtest
     steps:
+      - run:
+          name: Install System Dependencies
+          command: |
+                sudo apt-get update
+                sudo apt-get install -y libzip-dev # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
+      - run:
+            name: Install php extension
+            command: sudo docker-php-ext-install pdo_mysql mysqli zip
+      - run:
+          name: Update Composer
+          command: sudo composer self-update
       - checkout
-
-      - run:
-          name: "Prepare Environment"
-          command: |
-            sudo apt update
-            sudo docker-php-ext-install zip
-
-      - run:
-          name: "Create Environment file"
-          command: |
-            mv .env.testing .env
-
       # Download and cache dependencies
       - restore_cache:
           keys:
-            # "composer.lock" can be used if it is committed to the repo
-            - v1-dependencies-{{ checksum "composer.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
+            - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-
       - run:
-          name: "Install Dependencies"
-          command: composer install -n --prefer-dist
-
+          name: Install Composer Dependencies
+          command: composer install -n --ignore-platform-reqs
       - save_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: composer-v1-{{ checksum "composer.lock" }}
           paths:
-            - ./vendor
-
+            - vendor
+      - run:
+          name: Setup Environment
+          command: |
+            cp .env.example .env
       - run:
           name: "Generate App key"
           command: php artisan key:generate
-
-      # run tests with phpunit
+      - restore_cache:
+          keys:
+            - node-v1-{{ checksum "package.json" }}
+            - node-v1-
       - run:
-          name: "Run Unit Tests"
-          command: ./vendor/bin/phpunit tests/Unit
-
+          name: Install Node Dependencies
+          command: |
+            node --version
+            npm --version
+            npm install
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      # ESLint double check
       - run:
-	      name: "Create database and run migration"
-	      command: |
-	        touch database/database.sqlite
-	        php artisan migrate --env=testing
-
-	    - run:
-	      name: "Run Http Tests"
-	      command: ./vendor/bin/phpunit tests/Feature
+          name: ESLint
+          command: |
+            mkdir -p ./logs/eslint
+            node_modules/eslint/bin/eslint.js --ext .js,.vue -o logs/eslint/junit.xml -f junit resources/js
+      # Unit Test
+      - run:
+          name: Run Unit Tests
+          environment:
+            DB_CONNECTION: mysql_test
+          command: |
+            mkdir -p ./logs/phpunit
+            vendor/bin/phpunit -d memory_limit=512M --log-junit logs/phpunit/junit.xml --testdox-html logs/phpunit/testdox.html
+      - store_artifacts:
+          path: ./logs/eslint
+          destination: eslint
+      - store_artifacts:
+          path: ./logs/phpunit/
+          destination: phpunit
