@@ -29,4 +29,5 @@ class ExampleTest extends TestCase
                 'message' => "Successfully created user!",
             ]);
     }
+
 }
