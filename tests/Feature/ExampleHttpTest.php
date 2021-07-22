@@ -8,7 +8,18 @@ use Illuminate\Foundation\Testing\WithFaker;
 
 class ExampleTest extends TestCase
 {
-    use WithFaker;
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
+    public function test_example()
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
+
 
     public function testUserCreationEndpointTest()
     {
@@ -24,9 +35,11 @@ class ExampleTest extends TestCase
         ]); 
 
         $response
-            ->assertStatus(500)
+            ->assertStatus(201)
             ->assertExactJson([
                 'message' => "Successfully created user!",
             ]);
     }
+       
+
 }
