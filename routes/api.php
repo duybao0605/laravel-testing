@@ -13,4 +13,3 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('createuser', 'UserController@createUser');

@@ -74,6 +74,4 @@ jobs:
           path: ./logs/phpunit/
           destination: phpunit
 
-      - run:
-          name: "Run Http Tests"
-          command: ./vendor/bin/phpunit tests/Feature
+      
